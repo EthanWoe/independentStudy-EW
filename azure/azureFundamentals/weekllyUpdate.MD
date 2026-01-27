@@ -17,7 +17,7 @@
 ### TODO for Next Week:
   * 
 ---
- *Week 3*
+## *Week 3*
 
 ### Roadblocks
   *
