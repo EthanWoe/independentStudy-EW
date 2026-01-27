@@ -7,7 +7,7 @@
 ### TODO for Next Week:
   * Be ready to take the final exam at the end of week 3 or the beginning of week 4
 
-
+---
 ## *Week 2*
 
 ### Roadblocks
@@ -16,7 +16,7 @@
 
 ### TODO for Next Week:
   * 
-
+---
 ## *Week 3*
 
 ### Roadblocks
@@ -25,7 +25,7 @@
 
 ### TODO for Next Week:
   * 
-
+---
 ## *Week 4*
 
 ### Roadblocks
