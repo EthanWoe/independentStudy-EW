@@ -9,16 +9,16 @@
 
 ---
 ## *Week 2*
-
+Traveled to Colorado for a interview that went well. They said they would like to hire me but are negotating salary at the moment.
 ### Roadblocks
-  * 
+  * Was traveling so did not want to study, decided to use plane time instead to study and finished the rest of this course and started writing notes for next week.
   
 
 ### TODO for Next Week:
-  * 
+  * Take Test/Request funding
 ---
 ## *Week 3*
-
+ * 
 ### Roadblocks
   *
 
