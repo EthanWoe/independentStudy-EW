@@ -24,7 +24,7 @@ Traveled to Colorado for an interview that went well. They said they would like 
 
 
 ### TODO for Next Week:
-  * 
+  * Continue studying for the associate and have funding to take the fundamentals.
 ---
 ## *Week 4*
 
