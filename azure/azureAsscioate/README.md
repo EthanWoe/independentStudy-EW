@@ -249,11 +249,661 @@ This simplifies large-scale user management.
 
 ---
 
-## Key Takeaways
 
-* Complete user properties fully
-* Set Usage Location before assigning licenses
-* Use Security Groups for permissions and role assignments
-* Use Microsoft 365 Groups for collaboration
-* Dynamic groups automate membership using rules
-* Deleted users are recoverable for 30 days
+# Azure Administrative Governance & Compliance
+
+## Module Overview
+This module covers how to manage and govern Azure environments.
+
+Topics covered:
+- Azure core architecture
+- Azure regions
+- Azure subscriptions
+- Management groups
+- Resource groups
+- Tags
+- Resource locks
+- Cost management
+- Azure Policy
+- Policy Initiatives
+- Role-Based Access Control (RBAC)
+
+Goal: Understand how to effectively organize, secure, and manage Azure resources.
+
+---
+
+# Azure Core Architecture
+
+Azure resources are organized in a hierarchical structure:
+
+```
+Management Groups
+    ↓
+Subscriptions
+    ↓
+Resource Groups
+    ↓
+Resources
+```
+
+### Resources
+Resources are the actual services you create in Azure.
+
+Examples:
+- Virtual Machines (VMs)
+- Virtual Networks (VNets)
+- Load Balancers
+- Storage Accounts
+- Firewalls
+- Web Apps
+
+All resources must be placed inside a **Resource Group**.
+
+---
+
+# Azure Regions
+
+Azure operates globally with many regions.
+
+- 60+ regions worldwide
+- Distributed across many countries
+- Each region contains one or more data centers
+
+### Availability Zones
+
+Availability Zones provide:
+- Fault isolation
+- High availability
+- Disaster protection
+
+Regions may have:
+- 1 zone
+- Up to 3 zones
+
+Example:
+
+| Region | Availability Zones |
+|------|------|
+| UK West | 1 |
+| UK South | 3 |
+
+### Region Pairs
+
+Each Azure region has a **paired region**.
+
+Purpose:
+- Disaster recovery
+- Data redundancy
+
+Characteristics:
+- Usually **~300 miles apart**
+- Protects against large regional outages.
+
+### Choosing a Region
+
+Reasons to select specific regions:
+
+1. **Latency**
+   - Place resources near users.
+
+2. **Compliance**
+   - Some regulations require data to remain in specific countries.
+
+3. **Service availability**
+   - Not all services are available in all regions.
+
+---
+
+# Azure Subscriptions
+
+A **subscription** is required to create resources in Azure.
+
+Purpose:
+- Billing boundary
+- Security boundary
+- Resource organization
+
+Without a subscription:
+- Resources cannot be created.
+
+### Multiple Subscriptions
+
+Organizations often create multiple subscriptions.
+
+Example:
+
+```
+Account
+ ├ Dev Subscription
+ ├ Test Subscription
+ └ Production Subscription
+```
+
+Benefits:
+- Separate billing
+- Separate security controls
+- Easier cost tracking
+
+Each subscription:
+- Has its own billing
+- Can contain multiple users
+
+### Subscription Security
+
+Users inside a subscription **cannot access other subscriptions** unless permissions are granted.
+
+---
+
+# Types of Azure Subscriptions
+
+### Free Trial
+- $200 credit
+- 30 days
+
+### Pay-As-You-Go
+- Pay for what you use
+
+### Enterprise Agreement
+- Large organizations
+- Long-term contracts
+
+### Cloud Solution Provider (CSP)
+- Purchased through partners
+
+### Student Subscription
+- $100 credit
+- 12 months
+
+---
+
+# Management Groups
+
+Management groups allow administrators to manage **multiple subscriptions together**.
+
+Example hierarchy:
+
+```
+Root Management Group
+ ├ Human Resources
+ │   └ HR Subscription
+ ├ IT
+ │   └ Production Subscription
+ └ Marketing
+```
+
+### Benefits
+
+Management groups allow:
+- Policy enforcement
+- Access control
+- Governance across subscriptions
+
+### Limits
+
+- Maximum **6 hierarchy levels**
+- Maximum **10,000 objects**
+
+Root management group **does not count** toward the 6 levels.
+
+---
+
+# Resource Groups
+
+Resource groups are **containers that hold Azure resources**.
+
+Example:
+
+```
+Resource Group: WebProject
+
+Contains:
+- Virtual Machine
+- Storage Account
+- Database
+```
+
+### Key Characteristics
+
+Resource groups:
+
+- Cannot be renamed
+- Cannot contain other resource groups
+- Must belong to a subscription
+- Can contain many resource types
+
+### Best Practice
+
+Group resources by **project or workload**.
+
+Deleting a resource group **deletes all resources inside it**.
+
+---
+
+# Resource Group Regions
+
+Resource groups are created in a region.
+
+However, resources inside them **can be located in different regions**.
+
+Example:
+
+```
+Resource Group Location: UK South
+
+VM: East US
+Storage: UK South
+```
+
+---
+
+# Tags
+
+Tags are labels applied to resources.
+
+Tags are **key-value pairs**.
+
+Example:
+
+```
+Department: IT
+Owner: Admin
+Environment: Production
+```
+
+Tags help with:
+- Cost tracking
+- Resource organization
+- Filtering reports
+
+---
+
+# Resource Locks
+
+Resource locks prevent accidental changes.
+
+### Read-Only Lock
+Prevents:
+- Modifications
+- Deletion
+
+Users can only **view** the resource.
+
+### Delete Lock
+
+Prevents:
+- Deleting the resource
+
+But still allows:
+- Modifications
+
+Locks can be applied at:
+- Subscription
+- Resource group
+- Individual resource
+
+Locks **cannot be applied to management groups**.
+
+---
+
+# Azure Cost Considerations
+
+Costs depend on:
+
+- Resource type
+- Resource size
+- Region
+- Data transfer
+
+### Data Transfer
+
+| Type | Cost |
+|-----|-----|
+| Ingress (incoming) | Usually free |
+| Egress (outgoing) | Charged |
+
+---
+
+# Cost Optimization
+
+### Reserved Instances
+Reserve resources for:
+
+- 1 year
+- 3 years
+
+Savings up to **72%**.
+
+### Azure Hybrid Benefit
+Use existing licenses for:
+- Windows Server
+- SQL Server
+
+### Budgets
+Budgets allow:
+- Tracking spending
+- Alert notifications
+
+### Azure Advisor
+Provides recommendations for:
+
+- Cost optimization
+- Performance improvements
+- Security
+- Reliability
+
+---
+
+# Azure Policy
+
+Azure Policy allows administrators to **enforce rules and compliance** across resources.
+
+Policies help control:
+
+- Resource types
+- Resource locations
+- Allowed SKUs
+- Required tags
+- Security settings
+
+### Why Use Policies
+
+Organizations may need policies for:
+
+- Compliance requirements
+- Security standards
+- Cost control
+- Organizational governance
+
+Example restrictions:
+
+- Limit which regions resources can be deployed to
+- Restrict expensive VM sizes
+- Require tags for billing tracking
+- Require backup settings
+
+---
+
+# Azure Policy Components
+
+Three main components:
+
+### 1. Policy Definition
+
+Defines **what rule should be enforced**.
+
+Examples:
+
+- Allowed locations
+- Allowed VM sizes
+- Require tags
+
+Azure includes many **built-in policy definitions**.
+
+You can also create **custom policies**.
+
+---
+
+### 2. Policy Scope
+
+Defines **where the policy applies**.
+
+Policies can be applied to:
+
+- Management Groups
+- Subscriptions
+- Resource Groups
+
+Policies **cannot be applied directly to individual resources**.
+
+---
+
+### 3. Compliance Reports
+
+Compliance reports show:
+
+- Compliant resources
+- Non-compliant resources
+
+Non-compliant resources:
+
+- Are **not automatically deleted**
+- Continue to function
+- Are flagged for administrators
+
+---
+
+# Policy Enforcement Timing
+
+Policy enforcement typically takes:
+
+**5 – 15 minutes**
+
+After enforcement:
+
+- New resources violating policy **cannot be created**
+- Existing resources may appear **non-compliant**
+
+---
+
+# Remediation Tasks
+
+Remediation tasks attempt to automatically fix policy violations.
+
+Examples:
+
+- Automatically add missing tags
+- Apply configuration settings
+
+Some tasks **cannot be automated**, such as moving a resource to another region.
+
+---
+
+# Policy Initiatives
+
+Policy initiatives allow administrators to **group multiple policies together**.
+
+Example:
+
+Instead of assigning 100 policies individually:
+
+```
+Policy Initiative
+ ├ Policy 1
+ ├ Policy 2
+ ├ Policy 3
+ └ Policy 4
+```
+
+Benefits:
+
+- Easier policy management
+- Reduced administrative effort
+- Reusable governance templates
+
+Initiatives can be applied to:
+
+- Management groups
+- Subscriptions
+- Resource groups
+
+---
+
+# Role-Based Access Control (RBAC)
+
+RBAC controls **who can access Azure resources and what they can do**.
+
+Also known as:
+
+- IAM (Identity and Access Management)
+- Access Control
+
+RBAC can be applied at multiple levels:
+
+- Management Group
+- Subscription
+- Resource Group
+- Individual Resource
+
+---
+
+# RBAC Role Assignment
+
+Roles determine **what actions users can perform**.
+
+When a user creates a resource:
+
+- They automatically become the **Owner**.
+
+---
+
+# Common RBAC Roles
+
+### Owner
+
+Highest level of access.
+
+Permissions:
+- Read
+- Write
+- Delete
+- Assign permissions
+
+Owner can **fully manage resources and access**.
+
+---
+
+### Contributor
+
+Contributor can:
+
+- Create resources
+- Modify resources
+- Delete resources
+
+Contributor **cannot change permissions**.
+
+---
+
+### Reader
+
+Reader can:
+
+- View resources
+
+Reader **cannot modify or delete resources**.
+
+---
+
+# User Access Administrator
+
+Special role that allows:
+
+- Managing user access
+- Assigning roles
+- Changing permissions
+
+This role is often used by **administrators managing access control**.
+
+---
+
+# Principle of Least Privilege
+
+Security best practice:
+
+Users should receive **only the permissions they need**.
+
+Example:
+
+Instead of giving **Contributor on entire subscription**:
+
+Assign:
+
+```
+Virtual Machine Contributor
+```
+
+This allows users to manage VMs but not other resources.
+
+---
+
+# Role Scope Strategy
+
+RBAC can be applied at different scopes.
+
+Example:
+
+Assign at:
+
+- Resource → limited access
+- Resource group → access to all resources in group
+- Subscription → access to everything
+
+Best practice:
+
+**Use the narrowest scope possible.**
+
+---
+
+# Built-in Roles
+
+Azure includes **hundreds of predefined roles**.
+
+Examples:
+
+- Owner
+- Contributor
+- Reader
+- Virtual Machine Contributor
+- Storage Account Contributor
+- Network Contributor
+
+Roles define permissions using **JSON definitions**.
+
+---
+
+# Custom Roles
+
+If built-in roles are insufficient:
+
+Administrators can **create custom roles**.
+
+Custom roles define:
+
+- Allowed actions
+- Denied actions
+- Assignable scopes
+
+Custom roles provide **fine-grained permission control**.
+
+---
+
+# Key Takeaways
+
+Azure governance is built around several core mechanisms:
+
+### Architecture
+
+```
+Management Groups
+ → Subscriptions
+ → Resource Groups
+ → Resources
+```
+
+### Governance Tools
+
+- Tags
+- Resource Locks
+- Azure Policy
+- Policy Initiatives
+- RBAC
+- Budgets
+- Azure Advisor
+
+### Security Principles
+
+- Least privilege access
+- Controlled resource deployment
+- Compliance monitoring
+
+These tools allow organizations to **secure, manage, and scale Azure environments effectively**.
