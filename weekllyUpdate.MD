@@ -27,9 +27,27 @@ Traveled to Colorado for an interview that went well. They said they would like 
   * Continue studying for the associate and have funding to take the fundamentals.
 ---
 ## *Week 4*
-
+Passed Azure Exam
 ### Roadblocks
-  *
+  * Reduced studying for AZ-104 for exam.
 
 ### TODO for Next Week:
-  * 
+  * Spring break
+## *Week 4*
+
+Passed Azure Exam
+### Springbreak
+  * springbreak
+
+### TODO for Next Week:
+  * Start az-104 again
+
+## *Week 4*
+Passed Azure Exam
+### Roadblocks
+  * Spring break studying/ two days in the week to continue studying
+  * Worried about exam difficulty as it says experience is highly recommended before taking the exam
+
+### TODO for Next Week:
+  * get halfway or close to halfway done with 104
+  
