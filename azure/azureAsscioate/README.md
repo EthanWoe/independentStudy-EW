@@ -907,3 +907,213 @@ Management Groups
 - Compliance monitoring
 
 These tools allow organizations to **secure, manage, and scale Azure environments effectively**.
+
+
+# Administer Virtual Networking (Azure) – Notes
+
+## Overview
+- Covers:
+  - Virtual Networks (VNets)
+  - Subnets
+  - IP Addressing
+  - Network Security Groups (NSGs)
+  - Azure DNS (later)
+
+---
+
+## Virtual Network (VNet) Planning
+
+### Why Planning Matters
+- Creation is easy → planning is critical
+- Key considerations:
+  - **Region/location**
+    - Resources must be in the same region as the VNet
+  - **IP address scheme**
+  - **Subnet sizing**
+  - **Future connectivity needs**
+
+### Important Rule
+- ❗ No overlapping IP ranges between VNets if they will communicate
+
+---
+
+## IP Addressing Basics
+
+### IPv4 vs IPv6
+- Azure supports both
+- Focus here: IPv4
+
+### Private IP Ranges (RFC 1918)
+Used for internal networks:
+
+- `10.0.0.0 – 10.255.255.255`
+- `172.16.0.0 – 172.31.255.255`
+- `192.168.0.0 – 192.168.255.255`
+
+### Public vs Private IPs
+- **Private IPs**
+  - Free
+  - Used inside VNets
+- **Public IPs**
+  - Cost money
+  - Used for internet access
+
+---
+
+## Subnets & Addressing
+
+### Example
+- VNet: `10.0.0.0/16`
+- Subnet: `10.0.1.0/24`
+
+### Address Count
+- `/24` = 256 total addresses
+
+### Azure Reserved IPs
+Azure reserves **5 IP addresses per subnet**:
+1. Network address (`.0`)
+2. Gateway (`.1`)
+3. DNS (`.2`)
+4. DNS (`.3`)
+5. Broadcast (`.255`)
+
+**Usable IPs:**
+- `256 - 5 = 251`
+
+---
+
+## Creating a Virtual Network
+
+### Required Fields
+- Subscription
+- Resource Group
+- Name
+- Region
+
+### Key Configurations
+- Address space (CIDR)
+- At least **one subnet required**
+
+### Optional Features
+- Encryption
+- DDoS protection
+- Firewall
+
+### Notes
+- You can add multiple address ranges to a VNet
+- You cannot change address range after resources are deployed (without removing them)
+
+---
+
+## Subnets
+
+- Required for placing resources
+- Resources must live inside a subnet
+- Can:
+  - Adjust size (/24, /26, etc.)
+  - Add more later
+
+---
+
+## Public IP Addresses
+
+### Key Points
+- Azure assigns IP automatically (cannot choose manually)
+- Types:
+  - IPv4 / IPv6
+- SKU:
+  - Standard only
+- Allocation:
+  - Static only (for Standard SKU)
+
+### Routing Options
+- Microsoft network (default)
+- Internet routing
+
+---
+
+## Network Security Groups (NSGs)
+
+### What is an NSG?
+- Acts as a firewall for Azure resources
+- Filters traffic using rules
+
+### Uses 5-Tuple Filtering
+- Source IP
+- Destination IP
+- Source Port
+- Destination Port
+- Protocol (TCP/UDP)
+
+---
+
+## NSG Placement
+
+NSGs can be applied to:
+- Subnet
+- Network Interface Card (NIC)
+
+### Important Rules
+- One resource can only have **one NSG**
+- One NSG can be applied to **multiple resources**
+
+---
+
+## NSG Traffic Flow
+
+### If applied at both subnet and NIC:
+Traffic must be allowed at **both levels**
+
+Example:
+- Port 80 allowed at subnet ✅
+- Port 80 blocked at NIC ❌  
+→ Traffic is blocked
+
+---
+
+## NSG Rules
+
+### Default Rules (Cannot Change)
+
+Inbound:
+- Allow VNet traffic
+- Allow Azure Load Balancer
+- Deny all others
+
+Outbound:
+- Allow VNet traffic
+- Allow Internet
+- Deny all others
+
+---
+
+## Custom NSG Rules
+
+### Rule Components
+- Source (IP, service tag, etc.)
+- Destination
+- Port
+- Protocol
+- Action (Allow/Deny)
+- Priority
+
+### Priority
+- Range: `100 – 4096`
+- Lower number = higher priority
+- Rules processed top-down
+
+### Example
+Allow HTTP:
+- Port: 80
+- Protocol: TCP
+- Action: Allow
+
+---
+
+## Key NSG Notes
+- Default "deny all" exists → no need to manually deny everything
+- Max ~1000 rules per NSG
+- Leave gaps in priority numbers for future rules
+
+---
+
