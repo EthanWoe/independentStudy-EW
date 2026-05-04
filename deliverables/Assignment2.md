@@ -47,5 +47,5 @@ Answer each question in 3 to 5 sentences.
 - Real world thinking - / 2
    - [ ] .05 for each answered question
 - Reflection- / 1
-   - [ ] Thoughtful answer. 
+   - [ ] Thoughtful answer given and a why.
 
