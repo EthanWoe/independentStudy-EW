@@ -26,6 +26,6 @@
    
     * **Assignment One:** Core System Architecture
         * Goes over the basics of different service types such as on-prem, IAAS, PAAS, SAAS. This is fundamental knowledge that is needed. Asking questions about these during an interview or during the job will be very bad.
-    *** Assignment Two:** Essential technical terminology
+    * **Assignment Two:** Essential technical terminology
         * Similar to assignment one, just essential technical jargon that is needed to know when you are going to be interviewing or working as a sys admin
 ---
