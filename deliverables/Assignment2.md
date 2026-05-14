@@ -41,11 +41,11 @@ Answer each question in 3 to 5 sentences.
 # Rubric
 
 - Definitions - / 6
-   - [ ] .05 for each answered question
+   - [ ] .5 for each answered question
 - Compare/Contrast - / 2
-   - [ ] .05 for each answered question
+   - [ ] .5 for each answered question
 - Real world thinking - / 2
-   - [ ] .05 for each answered question
+   - [ ] .5 for each answered question
 - Reflection- / 1
    - [ ] Thoughtful answer given and a why.
 
